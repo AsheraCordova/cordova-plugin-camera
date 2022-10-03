@@ -45,7 +45,7 @@ function takePicture (success, error, opts) {
             reader.readAsDataURL(inputEvent.target.files[0]);
         };
 
-        document.body.appendChild(input);
+        window.shadowRoot.appendChild(input);
     }
 }
 
@@ -60,6 +60,9 @@ function capture (success, errorCallback, opts) {
     var video = document.createElement('video');
     var button = document.createElement('button');
     var parent = document.createElement('div');
+    var items = window.shadowRoot.querySelectorAll(".root");
+    parent.style.width = items[0].style.width;
+    parent.style.height = items[0].style.height;
     parent.style.position = 'relative';
     parent.style.zIndex = HIGHEST_POSSIBLE_Z_INDEX;
     parent.className = 'cordova-camera-capture';
@@ -108,14 +111,10 @@ function capture (success, errorCallback, opts) {
             video.src = window.URL.createObjectURL(localMediaStream);
         }
         video.play();
-        document.body.appendChild(parent);
+        window.shadowRoot.appendChild(parent);
     };
 
-    if (navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-            .then(successCallback)
-            .catch(errorCallback);
-    } else if (navigator.getUserMedia) {
+    if (navigator.getUserMedia) {
         navigator.getUserMedia({ video: true, audio: false }, successCallback, errorCallback);
     } else {
         alert('Browser does not support camera :(');
