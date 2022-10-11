@@ -141,6 +141,8 @@
         <js-module src="src/browser/CameraProxy.js" name="CameraProxy">
             <runs />
         </js-module>
+        
+        <resource-file src="src/browser/css/camera.css" target="../../src/main/assets/www/css/camera.css" />
     </platform>
 
     <!-- windows -->
